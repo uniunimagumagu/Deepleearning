@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  resnet_training:
+    image: resnet_training  # ビルドされたイメージ名を使用
+    volumes:
+      - ./data:/workspace/data  # 任意のデータディレクトリをマウント（必要に応じて変更）
+     # - ~/.kaggle:/workspace/kaggle:rw
+   # ports:
+   #   - "8008:8008" #なんかJupyterように
+    stdin_open: true
+    tty: true
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all  # GPUを使用する場合
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
