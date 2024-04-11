@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  grad_cam_tutorial:
+    image: grad_cam_tutorial  # ビルドされたイメージ名を使用
+    user: "10106:1103"  # ここに実際のUID:GIDを設定
+    volumes:
+      - /home/kobamasa/mywork/Deeplearing/Grad_CAM/:/workspace:rw
+   # ports:
+   #   - "8008:8008" #なんかJupyterように
+    stdin_open: true
+    tty: true
+    shm_size: '4gb'  # 共有メモリのサイズを2GBに設定
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all  # GPUを使用する場合
+    deploy:
+      resources:
+        limits:
+          cpus: '9.0'
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
